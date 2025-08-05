@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import axios from "axios";
 import { BASE_URL } from "../utils/constants";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
@@ -9,8 +9,10 @@ import { useEffect } from "react";
 const useFetchUser = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const user = useSelector((store) => store.user);
 
   const fetchUser = async () => {
+    if (user) return; //if user is not logged or present then return
     try {
       const res = await axios.get(BASE_URL + "/profile/view", {
         withCredentials: true,
