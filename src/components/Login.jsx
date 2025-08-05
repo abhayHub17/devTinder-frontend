@@ -10,6 +10,7 @@ import { BASE_URL } from "../utils/constants";
 const Login = () => {
   const [emailId, setEmailId] = useState("enzo@gmail.com");
   const [password, setPassword] = useState("Enzoo@08");
+  const [error, setError] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -26,7 +27,7 @@ const Login = () => {
       dispatch(addUser(res.data));
       navigate("/");
     } catch (error) {
-      console.log(error);
+      setError(error.response.data || "Something went wrong!");
     }
   };
 
@@ -96,6 +97,7 @@ const Login = () => {
             At least one uppercase letter
           </p>
           <div className="validator-hint hidden">Enter valid email address</div>
+          <p className="text-red-500">{error}</p>
           <div className="card-actions justify-center">
             <button className="btn btn-primary" onClick={handleLogin}>
               Login
