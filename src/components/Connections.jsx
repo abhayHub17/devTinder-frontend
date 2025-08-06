@@ -30,12 +30,20 @@ const Connections = () => {
   return (
     <div className="text-center">
       <h1 className="text-2xl m-10">Connections</h1>
-      {connections.map((connection, index) => {
-        const { firstName, lastName, age, gender, about, photoURL, skills } =
-          connection;
+      {connections.map((connection) => {
+        const {
+          _id,
+          firstName,
+          lastName,
+          age,
+          gender,
+          about,
+          photoURL,
+          skills,
+        } = connection;
         return (
           <div
-            key={index}
+            key={_id}
             className="flex items-center rounded-lg my-4 p-4 mx-auto bg-base-300 w-1/2"
           >
             <div>
