@@ -17,7 +17,7 @@ const UserCard = ({ user }) => {
             <p>{user.about}</p>
             <p>{user.skills}</p>
             <div className="card-actions justify-Center">
-              <button className="btn btn-primary">Send Request</button>
+              <button className="btn btn-primary">Interested</button>
               <button className="btn btn-primary">Ignore</button>
             </div>
           </div>
