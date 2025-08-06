@@ -3,7 +3,7 @@ import axios from "axios";
 import React, { useEffect } from "react";
 import { BASE_URL } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
-import { addRequests } from "../utils/requestsSlice";
+import { addRequests, removeRequest } from "../utils/requestsSlice";
 
 const Requests = () => {
   const dispatch = useDispatch();
@@ -20,12 +20,26 @@ const Requests = () => {
     }
   };
 
+  const handleRequests = async (status, _id) => {
+    const res = await axios.post(
+      BASE_URL + "/request/review/" + status + "/" + _id,
+      {},
+      { withCredentials: true }
+    );
+    dispatch(removeRequest(_id)); //to remove the request from the request page after accepting or rejecting
+  };
+
   useEffect(() => {
     fetchRequests();
   }, []);
 
   if (!requests) return;
-  if (requests.length === 0) return <h2>No pending requests found!</h2>;
+  if (requests.length === 0)
+    return (
+      <h2 className="text-xl font-bold flex justify-center m-20">
+        No pending requests found!
+      </h2>
+    );
 
   return (
     <div className="text-center">
@@ -62,8 +76,18 @@ const Requests = () => {
               <p>{skills}</p>
             </div>
             <div className="flex">
-              <button className="btn btn-primary m-2">Reject</button>
-              <button className="btn btn-secondary m-2">Accept</button>
+              <button
+                className="btn btn-primary m-2"
+                onClick={() => handleRequests("rejected", request._id)}
+              >
+                Reject
+              </button>
+              <button
+                className="btn btn-secondary m-2"
+                onClick={() => handleRequests("accepted", request._id)}
+              >
+                Accept
+              </button>
             </div>
           </div>
         );
